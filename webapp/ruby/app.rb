@@ -1,6 +1,7 @@
 require 'digest/sha1'
 require 'mysql2'
 require 'sinatra/base'
+require_relative 'profile_middleware'
 
 class App < Sinatra::Base
   configure do
@@ -10,6 +11,15 @@ class App < Sinatra::Base
 
     enable :sessions
   end
+
+  use(
+    IsuconProfiler::Middleware,
+    enabled: true,
+    path: 'profile/',
+    raw: true,
+    mode: :wall,
+    save_every: 3,
+  )
 
   configure :development do
     require 'sinatra/reloader'
@@ -241,7 +251,7 @@ class App < Sinatra::Base
     @self_profile = user['id'] == @user['id']
     erb :profile
   end
-  
+
   get '/add_channel' do
     if user.nil?
       return redirect '/login', 303
