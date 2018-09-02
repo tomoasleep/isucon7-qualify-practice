@@ -32,6 +32,9 @@ services:
       context: ./docker/app/ruby
       args:
         GIT_URL: https://github.com/isucon/isucon7-qualify.git
+    volumes:
+      - ./:/home/isucon/isubata
+    #command: 'bundle exec puma -p 5000'
     #image: isucon7-qualifier-app:golang
     #image: isucon7-qualifier-app:nodejs
     #image: isucon7-qualifier-app:perl
