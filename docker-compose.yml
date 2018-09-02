@@ -16,6 +16,8 @@ services:
       args:
         GIT_URL: https://github.com/isucon/isucon7-qualify.git
     image: isucon7-qualifier-web:nginx
+    volumes:
+      - ./logs/nginx:/var/log/nginx
     networks:
       - frontend
       - backend
